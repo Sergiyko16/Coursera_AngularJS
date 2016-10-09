@@ -16,8 +16,7 @@ function LunchCheckController($scope)
 
     if (lunchItems.length == 0)
     {
-      $scope.message = "Please enter data first";
-      return;
+      $scope.message = "Please enter data first";      
     }
     else if (lunchItems.length <= 3)
     {
@@ -39,7 +38,7 @@ function getLunchItems(lunchContent)
     if (originalLunchItems[i]) {
       polishedLunchItems.push(originalLunchItems[i]);
     }
-  }  
+  }
 
   return polishedLunchItems;
 }
