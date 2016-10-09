@@ -12,15 +12,14 @@ function LunchCheckController($scope)
 
   $scope.check_amount = function()
   {
-    if ($scope.lunch_content == "")
+    var lunchItems = getLunchItems($scope.lunch_content)
+
+    if (lunchItems.length == 0)
     {
       $scope.message = "Please enter data first";
       return;
     }
-
-    var lunchItems = $scope.lunch_content.split(',');
-
-    if (lunchItems.length <= 3)
+    else if (lunchItems.length <= 3)
     {
       $scope.message = "Enjoy!";
     }
@@ -29,5 +28,20 @@ function LunchCheckController($scope)
     }
   };
 };
+
+// Removing empty records so that situation like "item1,,,item2" is processed correctly
+function getLunchItems(lunchContent)
+{
+  var originalLunchItems = lunchContent.split(',');
+
+  var polishedLunchItems = new Array();
+  for (var i = 0; i < originalLunchItems.length; i++) {
+    if (originalLunchItems[i]) {
+      polishedLunchItems.push(originalLunchItems[i]);
+    }
+  }  
+
+  return polishedLunchItems;
+}
 
 })();
