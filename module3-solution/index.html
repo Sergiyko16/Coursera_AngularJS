@@ -8,8 +8,8 @@
     <script src="angular.min.js"></script>
     <script src="app.js"></script
   </head>
-<body ng-app="NarrowItDownApp">
-   <div class="container" ng-controller="NarrowItDownController as ctrl">
+<body ng-app="NarrowItDownApp" ng-controller="NarrowItDownController as ctrl">
+   <div class="container">
     <h1>Narrow Down Your Chinese Menu Choice</h1>
 
     <div class="form-group">
@@ -22,8 +22,10 @@
     <!-- Bonus loader (see Bonus section of the assignment) -->
     <items-loader-indicator></items-loader-indicator>
 
-    <!-- found-items should be implemented as a component -->
-    <found-items></found-items>
+  </div>
+
+  <div>
+    <found-items found="ctrl.found"></found-items>
   </div>
 
 </body>
