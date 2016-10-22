@@ -4,20 +4,31 @@
   angular.module('NarrowItDownApp', [])
   .controller("NarrowItDownController", NarrowItDownController)
   .service("MenuSearchService", MenuSearchService)
-  .directive('foundItems', FoundItems);
+  .directive('foundItems', FoundItems)
+  .controller('FoundItemsController', FoundItemsController)
+  .constant('ServiceUrl','https://davids-restaurant.herokuapp.com/menu_items.json');
 
 function FoundItems()
 {
   var ddo = {
     restrict: 'E',
     scope: {
-      items: '<found'
+      items: '<found',
+      removeItem: '&',
     },
-    templateUrl: 'foundItems.html'
+    templateUrl: 'foundItems.html',
+    controller: FoundItemsController,
+    controllerAs: 'ctrl',
+    bindToController : true
   };
 
   return ddo;
 };
+
+function FoundItemsController()
+{
+  var ctrl = this;
+}
 
 NarrowItDownController.$inject = ['MenuSearchService'];
 function NarrowItDownController (MenuSearchService)
@@ -34,46 +45,41 @@ function NarrowItDownController (MenuSearchService)
       searchPromise.then(function(items)
       {
         controller.found = items;
-
-        console.log(controller.found);
       });
+  }
+
+  controller.removeItem = function(index)
+  {    
+    controller.found.splice(index, 1);
   }
 };
 
-MenuSearchService.$inject = ['$http'];
-function MenuSearchService($http)
+MenuSearchService.$inject = ['$http', 'ServiceUrl'];
+function MenuSearchService($http, serviceUrl)
 {
   var service = this;
 
-  var serviceUrl = 'https://davids-restaurant.herokuapp.com/menu_items.json';
-
   service.getMatchedMenuItems = function(searchTerm)
   {
-    console.log(searchTerm);
-
     return $http(
       {
         method: 'GET',
         url: serviceUrl
       }
     ).then(function (response) {
-    var allItems = response.data.menu_items;
+        var allItems = response.data.menu_items;
 
-    var filteredItems = [];
+        var filteredItems = [];
 
-    for (var i = 0; i < allItems.length; i++) {
-      var name = allItems[i].name;
-      if (name.toLowerCase().indexOf(searchTerm) !== -1) {
-        filteredItems.push(allItems[i]);
-      }
-    }
+        for (var i = 0; i < allItems.length; i++) {
+          var name = allItems[i].name;
+          if (name.toLowerCase().indexOf(searchTerm) !== -1) {
+            filteredItems.push(allItems[i]);
+          }
+        }
 
-    console.log(allItems);
-    console.log(filteredItems);
-        // return processed items
-    return filteredItems;
-  });
-
+        return filteredItems;
+      });
   };
 }
 

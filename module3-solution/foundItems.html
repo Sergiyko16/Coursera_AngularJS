@@ -1,3 +1,5 @@
-<ol>
-<li ng-repeat="item in items">Item Name: {{item.name}}</li>
-</ol>
+<ul>
+<li ng-repeat="item in ctrl.items">Item Name: {{item.name}}
+  <button ng-click="ctrl.removeItem({'index': $index})">Don't want this one! </button>
+</li>
+</ul>
