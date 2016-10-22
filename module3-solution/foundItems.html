@@ -1,5 +1,23 @@
-<ul>
-<li ng-repeat="item in ctrl.items">Item Name: {{item.name}}
-  <button ng-click="ctrl.removeItem({'index': $index})">Don't want this one! </button>
-</li>
-</ul>
+<h1>Menu</h1>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Short Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in ctrl.items">
+      <td>{{item.id}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.short_name}}</td>
+      <td>{{item.description}}</td>
+      <td>
+        <button class="btn btn-info" ng-click="ctrl.remove({'index': $index})">Don't want this one!</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

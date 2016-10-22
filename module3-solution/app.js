@@ -14,7 +14,7 @@ function FoundItems()
     restrict: 'E',
     scope: {
       items: '<found',
-      removeItem: '&',
+      remove: '&',
     },
     templateUrl: 'foundItems.html',
     controller: FoundItemsController,
@@ -48,8 +48,8 @@ function NarrowItDownController (MenuSearchService)
       });
   }
 
-  controller.removeItem = function(index)
-  {    
+  controller.remove = function(index)
+  {
     controller.found.splice(index, 1);
   }
 };
@@ -73,7 +73,7 @@ function MenuSearchService($http, serviceUrl)
 
         for (var i = 0; i < allItems.length; i++) {
           var name = allItems[i].name;
-          if (name.toLowerCase().indexOf(searchTerm) !== -1) {
+          if (name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) {
             filteredItems.push(allItems[i]);
           }
         }
